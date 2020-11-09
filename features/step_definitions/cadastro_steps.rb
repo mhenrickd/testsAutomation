@@ -5,11 +5,39 @@ end
   
 Quando('submeto o meu cadastro com:') do |table|
     user =  table.rows_hash
+
+    delorean user[:email]
+    
     find("input[name*=email]").set user[:email]
     find("input[placeholder='Sua senha secreta']").set user[:senha]
     find("input[placeholder='Confirme a senha']").set user[:senha_confirma]
+
+    click_on "Cadastrar"
 end
   
 Então('devo ser redirecionado para a área logada') do
-    pending # Write code here that turns the phrase above into concrete actions
+    expect(page).to have_css '.dashboard'
+end
+
+Quando('submeto o meu cadastro sem o email') do
+    find("input[placeholder='Sua senha secreta']").set "pdw123"
+    find("input[placeholder='Confirme a senha']").set "pdw123"
+
+    click_on "Cadastrar"
+end
+  
+  Então('devo ver Oops! Informe seu email') do
+    alert = find(".message p")
+    expect(alert.text).to eql 'Oops! Informe seu email.'
+end
+
+Quando('submeto o meu cadastro sem a senha') do
+    find("input[name*=email]").set 'fernando@hotmail.com'
+
+    click_on "Cadastrar"
+end
+  
+Então('devo ver Oops! Informe sua senha') do
+    alert = find(".message p")
+    expect(alert.text).to eql 'Oops! Informe sua senha.'
 end
