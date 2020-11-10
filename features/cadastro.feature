@@ -14,34 +14,21 @@ Funcionalidade: Cadastro de usuários
             |senha_confirma |pwd123             |
         Então devo ser redirecionado para a área logada
 
-    Cenario: Email não informado
+    Esquema do Cenário: Tentativa de Cadastro
+
         Dado que acesso a página de cadastro
         Quando submeto o meu cadastro com: 
-            |email          |                   |
-            |senha          |pwd123             |
-            |senha_confirma |pwd123             |
-        Então devo ver a mensagem: "Oops! Informe seu email."
-   
-    Cenario: Senha não informada
-       Dado que acesso a página de cadastro
-        Quando submeto o meu cadastro com: 
-            |email          |fernando@hotmail.com|
-            |senha          |                    |
-            |senha_confirma |                    |
-        Então devo ver a mensagem: "Oops! Informe sua senha."
+            |email          | <email>          |
+            |senha          | <senha>          |
+            |senha_confirma | <confirma_senha> |
+        Então devo ver a mensagem: "<mensagem_saida>"
 
-    Cenario: Senha divergente
-       Dado que acesso a página de cadastro
-        Quando submeto o meu cadastro com: 
-            |email          |fernando@hotmail.com|
-            |senha          |pwd123              |
-            |senha_confirma |abc123              |
-        Então devo ver a mensagem: "Oops! Senhas não são iguais."
+        Exemplos:
+        | email                | senha  | confirma_senha | mensagem_saida                       |
+        |                      | pwd123 | pwd123         | Oops! Informe seu email.             |
+        | fernando@hotmail.com |        |                | Oops! Informe sua senha.             |
+        | fernando@hotmail.com | pwd123 | abc123         | Oops! Senhas não são iguais.         |
+        |                      |        |                | Oops! Informe seu email e sua senha. |
 
-    Cenario: Nenhum campo preenchido
-       Dado que acesso a página de cadastro
-        Quando submeto o meu cadastro com: 
-            |email          |   |
-            |senha          |   |
-            |senha_confirma |   |
-        Então devo ver a mensagem: "Oops! Informe seu email e sua senha."
+
+
